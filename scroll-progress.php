@@ -159,9 +159,9 @@ function scroll_progress_enqueue_scripts_and_styles() {
 function scroll_progress_smooth_scroll_scripts_and_styles() {
 	$scroll_progress_options = get_scroll_progress_options();
 	// enqueue our smooth scroll script from CDN
-	wp_register_script( 'smooth-scroll' , '//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js' , array( 'jquery' ) , 'all' );
+	wp_register_script( 'smooth-scroll' , plugin_dir_url( __FILE__ ) . 'lib/js/TweenMax.min.js' , array( 'jquery' ) , 'all' );
 	wp_enqueue_script( 'smooth-scroll' );
-	wp_register_script( 'scroll-to' , '//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js' , array( 'jquery' ) , 'all' );
+	wp_register_script( 'scroll-to' , plugin_dir_url( __FILE__ ) . 'lib/js/ScrollToPlugin.min.js' , array( 'jquery' ) , 'all' );
 	wp_enqueue_script( 'scroll-to' );
 	// enqueue our smooth scroll script which handles the actual scrolling
 	wp_register_script( 'smooth-scroll-handling' , plugin_dir_url( __FILE__ ) . 'lib/js/smooth-scroll-handle.min.js' , array( 'jquery' , 'smooth-scroll' , 'scroll-to' ) , 'all' );
