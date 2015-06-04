@@ -53,10 +53,10 @@ class Scroll_Progress_Admin {
 	 * @since 0.1.0
 	 */
 	public function hooks() {
-		add_action( 'admin_init', array( $this, 'init' ) );
-		add_action( 'admin_menu', array( $this, 'add_scroll_progress_options_page' ) );
-		add_action( 'cmb2_init', array( $this, 'add_scroll_progress_options_page_metabox' ) );
-		add_action( 'admin_footer_text' , array( $this, 'scroll_progress_alter_admin_footer' ) );
+		add_action( 'admin_init', array( $this, 'spb_init' ) );
+		add_action( 'admin_menu', array( $this, 'spb_add_options_page' ) );
+		add_action( 'cmb2_init', array( $this, 'spb_add_scroll_progress_options_metaboxes' ) );
+		add_action( 'admin_footer_text' , array( $this, 'spb_alter_admin_footer' ) );
 	}
 
 
@@ -64,7 +64,7 @@ class Scroll_Progress_Admin {
 	 * Register our setting to WP
 	 * @since  0.1.0
 	 */
-	public function init() {
+	public function spb_init() {
 		register_setting( $this->key, $this->key );
 	}
 
@@ -72,8 +72,8 @@ class Scroll_Progress_Admin {
 	 * Add menu options page
 	 * @since 0.1.0
 	 */
-	public function add_scroll_progress_options_page() {
-		$this->options_page = add_submenu_page( 'options-general.php', $this->title, $this->title, 'manage_options', $this->key, array( $this, 'scroll_progress_admin_page_display' ) );
+	public function spb_add_options_page() {
+		$this->options_page = add_submenu_page( 'options-general.php', $this->title, $this->title, 'manage_options', $this->key, array( $this, 'spb_admin_page_display' ) );
 		// Include CMB CSS in the head to avoid FOUT
 		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
@@ -82,7 +82,7 @@ class Scroll_Progress_Admin {
 	 * Admin page markup. Mostly handled by CMB2
 	 * @since  0.1.0
 	 */
-	public function scroll_progress_admin_page_display() {
+	public function spb_admin_page_display() {
 		?>
 		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
@@ -95,7 +95,7 @@ class Scroll_Progress_Admin {
 	 *	Alter the Scroll Progress admin footer with a custom notice
 	 *	@since 0.1
 	 */
-	function scroll_progress_alter_admin_footer() {
+	function spb_alter_admin_footer() {
 		// store current screen (we'll use it to grab the base)
 		$screen = get_current_screen();
 		// confirm that were on the 'Scroll Progress' options page, and alter the admin footer text
@@ -113,7 +113,7 @@ class Scroll_Progress_Admin {
 	 * Add the options metabox to the array of metaboxes
 	 * @since  0.1.0
 	 */
-	function add_scroll_progress_options_page_metabox() {
+	function spb_add_scroll_progress_options_metaboxes() {
 		
 		// Setup our Progress Bar Settings CMB2 Metabox
 		$cmb = new_cmb2_box( array(
