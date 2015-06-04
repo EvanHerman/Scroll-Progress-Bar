@@ -153,7 +153,7 @@ class Scroll_Progress_Admin {
 		
 		// Setup our Progress Bar Field - Progress Bar Post Types
 		$cmb->add_field( array(
-			'name'    => __( 'Display On', 'scroll-progress' ),
+			'name'    => __( 'Exclude From', 'scroll-progress' ),
 			'desc'    => __( 'Enter a comma separated list of page IDs to exclude the progress bar indicator from.' , 'scroll-progress' ),
 			'id'      => 'progress_bar_exclude_from',
 			'type'    => 'text',
@@ -182,7 +182,7 @@ class Scroll_Progress_Admin {
 		
 		// Setup our Smooth Scroll Field - Smooth Scroll Length (time)
 		$cmb->add_field( array(
-			'name'    => __( 'Smooth Scroll', 'scroll-progress' ),
+			'name'    => __( 'Smooth Scroll Duration', 'scroll-progress' ),
 			'desc'    => __( 'How long should scrolling take (s)? (default: .5)', 'scroll-progress' ),
 			'id'      => 'smooth_scroll_scroll_time',
 			'type'    => 'text_small',
@@ -191,7 +191,7 @@ class Scroll_Progress_Admin {
 		
 		// Setup our Smooth Scroll Field - Smooth Scroll Distance (distance)
 		$cmb->add_field( array(
-			'name'    => __( 'Smooth Scroll', 'scroll-progress' ),
+			'name'    => __( 'Smooth Scroll Distance', 'scroll-progress' ),
 			'desc'    => __( 'How many pixels should the page scroll (px). (default: 300)', 'scroll-progress' ),
 			'id'      => 'smooth_scroll_pixel_offset',
 			'type'    => 'text_small',
