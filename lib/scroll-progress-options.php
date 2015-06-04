@@ -221,7 +221,7 @@ class Scroll_Progress_Admin {
 	*	which will be used to target pages using the scroll bar
 	*	@since v0.1
 	*/
-	public static function scroll_progress_get_registered_post_types() {
+	public static function spb_get_registered_post_types() {
 		// store an array of registered post types
 		$registered_post_types = get_post_types();
 		// remove the un-needed post_types from our array
@@ -282,7 +282,7 @@ function cmb2_render_callback_for_post_type_multicheck( $field, $escaped_value, 
 	// get our options
 	$scroll_progress_options = spb_get_options();
 	// grab our registered post types
-	$registered_post_types = Scroll_Progress_Admin::scroll_progress_get_registered_post_types();
+	$registered_post_types = Scroll_Progress_Admin::spb_get_registered_post_types();
 	// create a UL
 	echo '<ul class="cmb2-checkbox-list cmb2-list">';
 		// check if homepage is in our array of post types to display on
