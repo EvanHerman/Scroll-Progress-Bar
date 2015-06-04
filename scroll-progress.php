@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 /*
 *	Helper funciton to get our options with default values
 */
-function get_scroll_progress_options() {
+function spb_get_options() {
 	// get and store default options array
 	return $scroll_progress_options = get_option( 'scroll_progress_options' , array(
 		'progress_bar_colorpicker' => '#bada55',
@@ -48,15 +48,15 @@ function get_scroll_progress_options() {
 *	Print our the progress bar
 *	On the frontend of the site
 */
-function scroll_progress_append_progress_indicator() {
+function spb_append_progress_indicator() {
 	// get the global $post variable
 	global $post;
 	
 	// retreive + store our options
-	$scroll_progress_options = get_scroll_progress_options();
+	$scroll_progress_options = spb_get_options();
 	
 	// load our smooth scroll scripts
-	load_smooth_scroll( $scroll_progress_options );	
+	spb_load_smooth_scroll( $scroll_progress_options );	
 	
 	// if our the user hasn't set any post types, don't do anything 
 	if( !isset( $scroll_progress_options['progress_bar_display_on_post_types'] ) ) {
@@ -81,7 +81,7 @@ function scroll_progress_append_progress_indicator() {
 		foreach( $display_on_post_types as $post_type ) {
 			if( is_singular( $post_type ) ) {
 				// render the scroll bar progress indicator
-				render_scroll_progress_bar( $scroll_progress_options );
+				spb_render_scroll_progress_bar( $scroll_progress_options );
 			}
 		}
 		// if the user has opted to display on 'pages',
@@ -89,7 +89,7 @@ function scroll_progress_append_progress_indicator() {
 		if( in_array( 'page' , $display_on_post_types ) ) {
 			if( is_archive() ) {
 				// render the scroll bar progress indicator
-				render_scroll_progress_bar( $scroll_progress_options );
+				spb_render_scroll_progress_bar( $scroll_progress_options );
 			}
 		}
 		// if the user has opted to display on the front page,
@@ -97,20 +97,20 @@ function scroll_progress_append_progress_indicator() {
 		if( in_array( 'home_page' , $display_on_post_types ) ) {
 			if( is_front_page() ) {
 				// render the scroll bar progress indicator
-				render_scroll_progress_bar( $scroll_progress_options );
+				spb_render_scroll_progress_bar( $scroll_progress_options );
 			}
 		}
 	}
 }
-add_action( 'wp_head' , 'scroll_progress_append_progress_indicator' , 0 );
+add_action( 'wp_head' , 'spb_append_progress_indicator' , 0 );
 
 /*
 *	Render our scroll bar progress indicator
 *	@since 0.1
 */
-function render_scroll_progress_bar( $scroll_progress_options ) {
+function spb_render_scroll_progress_bar( $scroll_progress_options ) {
 	// enqueue our scripts/styles (Progress Bar)
-	add_action( 'wp_enqueue_scripts' , 'scroll_progress_enqueue_scripts_and_styles' );		
+	add_action( 'wp_enqueue_scripts' , 'spb_enqueue_scripts_and_styles' );		
 	// render the progress bar at the top of our page
 	?>
 	<!-- override default color via settings page -->
@@ -131,10 +131,10 @@ function render_scroll_progress_bar( $scroll_progress_options ) {
 *	Load the necessary smooth scroll scripts
 *	@since 0.1
 */
-function load_smooth_scroll( $scroll_progress_options ) {
+function spb_load_smooth_scroll( $scroll_progress_options ) {
 	if( $scroll_progress_options['smooth_scroll_active'] == 'true' ) {
 		// enqueue our scripts/styles (Smooth Scroll)
-		add_action( 'wp_enqueue_scripts' , 'scroll_progress_smooth_scroll_scripts_and_styles' );
+		add_action( 'wp_enqueue_scripts' , 'spb_smooth_scroll_scripts_and_styles' );
 	}
 }
 
@@ -142,7 +142,7 @@ function load_smooth_scroll( $scroll_progress_options ) {
 *	Enqueue Scripts/Styles
 *	- for our progress bar
 */
-function scroll_progress_enqueue_scripts_and_styles() {
+function spb_enqueue_scripts_and_styles() {
 	// enqueue progress bar styles
 	wp_register_style( 'scroll-progress-styles' , plugin_dir_url( __FILE__ ) . 'lib/css/progress-bar-style.min.css' );
 	wp_enqueue_style( 'scroll-progress-styles' );
@@ -156,8 +156,8 @@ function scroll_progress_enqueue_scripts_and_styles() {
 *	Enqueue Scripts/Styles
 *	- for smooth scrolling (if enabled)
 */
-function scroll_progress_smooth_scroll_scripts_and_styles() {
-	$scroll_progress_options = get_scroll_progress_options();
+function spb_smooth_scroll_scripts_and_styles() {
+	$scroll_progress_options = spb_get_options();
 	// enqueue our smooth scroll script from CDN
 	wp_register_script( 'smooth-scroll' , plugin_dir_url( __FILE__ ) . 'lib/js/TweenMax.min.js' , array( 'jquery' ) , 'all' );
 	wp_enqueue_script( 'smooth-scroll' );

@@ -73,7 +73,7 @@ class Scroll_Progress_Admin {
 	 * @since 0.1.0
 	 */
 	public function add_scroll_progress_options_page() {
-		$this->options_page = add_submenu_page( 'options-general.php', $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
+		$this->options_page = add_submenu_page( 'options-general.php', $this->title, $this->title, 'manage_options', $this->key, array( $this, 'scroll_progress_admin_page_display' ) );
 		// Include CMB CSS in the head to avoid FOUT
 		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
@@ -82,7 +82,7 @@ class Scroll_Progress_Admin {
 	 * Admin page markup. Mostly handled by CMB2
 	 * @since  0.1.0
 	 */
-	public function admin_page_display() {
+	public function scroll_progress_admin_page_display() {
 		?>
 		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
@@ -280,7 +280,7 @@ function cmb2_render_callback_for_post_type_multicheck( $field, $escaped_value, 
 	// to check if were on a cpt page use is_singular( 'post_type' )
 	// https://codex.wordpress.org/Function_Reference/is_singular#Custom_Post_Types
 	// get our options
-	$scroll_progress_options = get_scroll_progress_options();
+	$scroll_progress_options = spb_get_options();
 	// grab our registered post types
 	$registered_post_types = Scroll_Progress_Admin::scroll_progress_get_registered_post_types();
 	// create a UL
