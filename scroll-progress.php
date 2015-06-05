@@ -38,6 +38,7 @@ function spb_get_options() {
 		'progress_bar_colorpicker' => '#bada55',
 		'progress_bar_display_on_post_types' => array( 'post' , 'page' , 'home_page' ),
 		'progress_bar_exclude_from' => '',
+		'progress_bar_top_offset' => '0',
 		'smooth_scroll_active' => 'true',
 		'smooth_scroll_scroll_time' => '.5',
 		'smooth_scroll_pixel_offset' => '300',
@@ -118,8 +119,17 @@ function spb_render_scroll_progress_bar( $scroll_progress_options ) {
 	#progressBar.flat::-webkit-progress-value {
 		background-color: <?php echo $scroll_progress_options['progress_bar_colorpicker']; ?> !important;
 	}
+	<?php 
+		$offset_top = $scroll_progress_options['progress_bar_top_offset'];
+		if( is_user_logged_in() ) {
+			$offset_top += 32;
+		} 
+	?>
+		#progressBar.flat {
+			margin-top: <?php echo $offset_top; ?>px !important;
+		}
 	</style>
-	<progress value="0" id="progressBar" class="flat <?php if( is_user_logged_in() ) { echo 'progressBar-logged-in'; } ?>" title="<?php _e( 'Page location progress bar' , 'scroll-progress' ); ?>">
+	<progress value="0" id="progressBar" class="flat" title="<?php _e( 'Page location progress bar' , 'scroll-progress' ); ?>">
 		<div class="progress-container">
 			<span class="progress-bar"></span>
 		</div>

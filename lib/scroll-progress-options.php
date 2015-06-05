@@ -149,8 +149,7 @@ class Scroll_Progress_Admin {
 			'id'      => 'progress_bar_display_on_post_types',
 			'type'    => 'post_type_multicheck',
 		) );
-		
-		
+				
 		// Setup our Progress Bar Field - Progress Bar Post Types
 		$cmb->add_field( array(
 			'name'    => __( 'Exclude From', 'scroll-progress' ),
@@ -158,6 +157,18 @@ class Scroll_Progress_Admin {
 			'id'      => 'progress_bar_exclude_from',
 			'type'    => 'text',
 		) );
+		
+		// Setup our Progress Bar Field - Top Offset
+		$cmb->add_field( array(
+			'name'    => __( 'Top Offset', 'scroll-progress' ),
+			'desc'    => '',
+			'id'      => 'progress_bar_top_offset',
+			'default' => '0',
+			'type'    => 'number',
+		) );
+		
+		
+		/** Begin Smooth Scroll **/
 			
 		// Setup our Smooth Scroll Field - Smooth Scroll Title
 		$cmb->add_field( array(
@@ -309,6 +320,19 @@ function cmb2_render_callback_for_post_type_multicheck( $field, $escaped_value, 
 }
 add_action( 'cmb2_render_post_type_multicheck', 'cmb2_render_callback_for_post_type_multicheck', 10, 5 );
 
+
+/* 
+ *	- number
+*/
+function cmb2_render_callback_for_number_field( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
+	// get our options
+	$scroll_progress_options = spb_get_options();
+	$value = isset( $scroll_progress_options['progress_bar_top_offset'] ) ? $scroll_progress_options['progress_bar_top_offset'] : '0';
+	echo '<label><input type="number" max="9999" min="0" name="progress_bar_top_offset" value="' . $value . '"> <em>px</em></label>';
+	// display a description
+	echo '<p class="cmb2-metabox-description">' . __( 'You can specify a top offset in the field above (px). This is useful if you have a sticky navigation that scrolls with the page.' , 'scroll-progress' ) . '</p>';
+}
+add_action( 'cmb2_render_number', 'cmb2_render_callback_for_number_field', 10, 5 );
 
 // Get it started
 scroll_progress_admin();
